@@ -1,0 +1,225 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+export default function DashboardPage() {
+  const [mounted, setMounted] = useState(false);
+  const [rol, setRol] = useState('Administrador');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <div className="min-h-screen bg-slate-100 text-gray-800 flex flex-col justify-between">
+      {/* HEADER NAVEGACIÓN DASHBOARD */}
+      <header className="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+        <Link href="/" className="flex flex-col hover:opacity-90 transition-opacity">
+          <h1 className="text-xl font-black">MeDent</h1>
+          <p className="text-[10px] uppercase font-bold text-blue-100">
+            CLÍNICA ODONTOLÓGICA — PANEL PRINCIPAL
+          </p>
+        </Link>
+
+        <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="bg-blue-800 hover:bg-blue-900 text-white font-bold text-xs py-2 px-3 rounded-xl border border-blue-400"
+          >
+            🏠 Página Principal
+          </Link>
+
+          <Link
+            href="/turnos"
+            className="bg-blue-800 hover:bg-blue-900 text-white font-bold text-xs py-2 px-3 rounded-xl border border-blue-400"
+          >
+            🗓️ Agenda
+          </Link>
+
+          <div className="flex items-center gap-1.5 bg-blue-700 px-2.5 py-1 rounded-xl border border-blue-500">
+            <span className="text-xs font-bold text-blue-100">Modo:</span>
+            <select
+              value={rol}
+              onChange={(e) => setRol(e.target.value)}
+              className="bg-white text-blue-900 font-extrabold text-xs p-1 rounded-lg outline-none cursor-pointer"
+            >
+              <option value="Administrador">Administrador</option>
+              <option value="Odontólogo">Odontólogo</option>
+              <option value="Secretaría">Secretaría</option>
+            </select>
+          </div>
+
+          <Link
+            href="/configuracion"
+            className="bg-blue-800 hover:bg-blue-900 text-white font-bold text-xs py-2 px-3 rounded-xl border border-blue-400"
+          >
+            ⚙️ Permisos
+          </Link>
+
+          <Link
+            href="/login"
+            className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs py-2 px-3 rounded-xl shadow-sm"
+          >
+            🚪 Cerrar Sesión
+          </Link>
+        </div>
+      </header>
+
+      {/* CONTENIDO DASHBOARD */}
+      <main className="p-6 max-w-6xl mx-auto w-full space-y-6 flex-1">
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-black text-gray-900">Panel de Control General</h2>
+            <p className="text-xs text-gray-500 font-medium mt-0.5">
+              Visualizando módulos autorizados para el rol de <strong>{rol}</strong>.
+            </p>
+          </div>
+          <span className="bg-blue-100 text-blue-900 text-xs font-black px-3 py-1 rounded-xl uppercase">
+            MODO {rol}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl">🗓️</span>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md uppercase">HABILITADO</span>
+              </div>
+              <h3 className="text-base font-black text-gray-900">Agenda & Turnos</h3>
+              <p className="text-xs text-gray-500">Grilla de turnos diaria, semanal y mensual.</p>
+            </div>
+            <Link href="/turnos" className="bg-blue-600 hover:bg-blue-700 text-white text-center font-bold text-xs py-2.5 px-4 rounded-xl transition-colors block">
+              Ingresar al Módulo →
+            </Link>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl">👥</span>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md uppercase">HABILITADO</span>
+              </div>
+              <h3 className="text-base font-black text-gray-900">Pacientes e Historias Clínicas</h3>
+              <p className="text-xs text-gray-500">Fichas médicas, antecedentes y datos personales.</p>
+            </div>
+            <Link href="/pacientes" className="bg-blue-600 hover:bg-blue-700 text-white text-center font-bold text-xs py-2.5 px-4 rounded-xl transition-colors block">
+              Ingresar al Módulo →
+            </Link>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl">🩺</span>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md uppercase">HABILITADO</span>
+              </div>
+              <h3 className="text-base font-black text-gray-900">Tratamientos & Odontograma</h3>
+              <p className="text-xs text-gray-500">Prácticas odontológicas y ficha dental.</p>
+            </div>
+            <button onClick={() => alert('Módulo de Odontograma en desarrollo.')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-colors">
+              Ingresar al Módulo →
+            </button>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl">💰</span>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md uppercase">HABILITADO</span>
+              </div>
+              <h3 className="text-base font-black text-gray-900">Finanzas & Aranceles</h3>
+              <p className="text-xs text-gray-500">Caja, facturación, honorarios y reportes de cobros.</p>
+            </div>
+            <button onClick={() => alert('Módulo de Finanzas en desarrollo.')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-colors">
+              Ingresar al Módulo →
+            </button>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl">👨‍⚕️</span>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md uppercase">HABILITADO</span>
+              </div>
+              <h3 className="text-base font-black text-gray-900">Recursos Humanos</h3>
+              <p className="text-xs text-gray-500">Legajos de personal, asistencias y pagos.</p>
+            </div>
+            <button onClick={() => alert('Módulo de Personal en desarrollo.')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-colors">
+              Ingresar al Módulo →
+            </button>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-2xl">⚙️</span>
+                <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md uppercase">HABILITADO</span>
+              </div>
+              <h3 className="text-base font-black text-gray-900">Configuración del Sistema</h3>
+              <p className="text-xs text-gray-500">Ajustes globales de clínica, marca, WhatsApp y CAT.</p>
+            </div>
+            <Link href="/configuracion" className="bg-blue-600 hover:bg-blue-700 text-white text-center font-bold text-xs py-2.5 px-4 rounded-xl transition-colors block">
+              Ingresar al Módulo →
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      <footer className="py-4 text-center text-xs text-gray-400 border-t bg-white">
+        MeDent SaaS Odontológico — Panel Principal de Control
+      </footer>
+    </div>
+  );
+}
+
+{/* TARJETA DE PACIENTES EN APP/DASHBOARD/PAGE.TSX */}
+<div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 space-y-4">
+  <div className="flex justify-between items-start">
+    <div className="w-10 h-10 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center text-xl">
+      👥
+    </div>
+    <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full uppercase">
+      Habilitado
+    </span>
+  </div>
+
+  <div>
+    <h3 className="text-base font-black text-gray-900">Pacientes e Historias Clínicas</h3>
+    <p className="text-xs text-gray-500 mt-1">Fichas médicas, antecedentes y datos personales.</p>
+  </div>
+
+  <Link 
+    href="/pacientes/lista" 
+    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black text-xs py-2.5 px-4 rounded-xl shadow-sm transition-colors block text-center"
+  >
+    Ingresar al Módulo →
+  </Link>
+</div> 
+
+{/* TARJETA DE PACIENTES EN APP/DASHBOARD/PAGE.TSX */}
+<div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 space-y-4">
+  <div className="flex justify-between items-start">
+    <div className="w-10 h-10 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center text-xl">
+      👥
+    </div>
+    <span className="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full uppercase">
+      Habilitado
+    </span>
+  </div>
+
+  <div>
+    <h3 className="text-base font-black text-gray-900">Pacientes e Historias Clínicas</h3>
+    <p className="text-xs text-gray-500 mt-1">Fichas médicas, antecedentes y datos personales.</p>
+  </div>
+
+  <Link 
+    href="/pacientes" 
+    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black text-xs py-2.5 px-4 rounded-xl shadow-sm transition-colors block text-center"
+  >
+    Ingresar al Módulo →
+  </Link>
+</div>
